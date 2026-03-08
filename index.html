@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyFlash</title>
+    <style>
+        /* Base page background */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0fdf4; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #064e3b; /* Very deep green for readability */
+        }
+
+        /* The main Card - Now a nice matching green instead of white */
+        .container {
+            background-color: #dcfce7; /* Light mint green */
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(20, 83, 45, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border: 1px solid #bbf7d0; /* Subtle border to define the shape */
+        }
+
+        .greeting {
+            font-size: 1.1rem;
+            color: #16a34a; 
+            margin: 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin: 10px 0 5px 0;
+            color: #14532d;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #15803d;
+            margin-bottom: 30px;
+        }
+
+        /* Stacked Form */
+        #studyForm {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Input fields with a slightly lighter green background */
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #86efac;
+            border-radius: 8px;
+            background-color: #f0fdf4;
+            color: #064e3b;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #22c55e;
+            background-color: #ffffff;
+        }
+
+        input::placeholder {
+            color: #4ade80;
+        }
+
+        /* The Generate Button */
+        .btn {
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #15803d;
+        }
+
+        .separator {
+            border-top: 1px solid #bbf7d0;
+            margin: 25px 0;
+        }
+
+        /* Result Area with a darker green background for contrast */
+        #result {
+            margin-top: 20px;
+            text-align: left;
+            padding: 15px;
+            background-color: #f0fdf4;
+            border-radius: 8px;
+            border: 1px solid #86efac;
+            color: #064e3b;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <p class="greeting">Hola!</p>
+        <h1>StudyFlash⚡</h1>
+        <p class="subtitle">Learn anything in a flash</p>
+
+        <form id="studyForm">
+            <input type="text" id="topic" placeholder="What are we studying?" required>
+            
+            <select id="format" required>
+                <option value="" disabled selected>Choose Format</option>
+                <option value="paragraph">Paragraph</option>
+                <option value="bullet points">Bullet Points</option>
+                <option value="flowchart">Flowchart</option>
+                <option value="outlines">Outlines</option>
+            </select>
+
+            <select id="level" required>
+                <option value="" disabled selected>Difficulty Level</option>
+                <option value="basic">Basic</option>
+                <option value="medium">Medium</option>
+                <option value="advance">Advanced</option>
+            </select>
+
+            <button type="submit" class="btn" id="submitBtn">Generate Flash</button>
+        </form>
+
+        <div class="separator"></div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const studyForm = document.getElementById('studyForm');
+        const resultDiv = document.getElementById('result');
+        const submitBtn = document.getElementById('submitBtn');
+
+        studyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            submitBtn.innerText = "Processing...";
+            submitBtn.disabled = true;
+            resultDiv.style.display = "none";
+
+            const payload = {
+                topic: document.getElementById('topic').value,
+                format: document.getElementById('format').value,
+                level: document.getElementById('level').value
+            };
+
+            try {
+                const response = await fetch('http://localhost:4000/study-api/plans', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.innerText = data.plan;
+                    resultDiv.style.display = "block";
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (error) {
+                alert("Server Connection Failed.");
+            } finally {
+                submitBtn.innerText = "Generate Flash";
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
