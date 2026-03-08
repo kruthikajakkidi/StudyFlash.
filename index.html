@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyFlash</title>
     <style>
-        /* Base page background */
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0fdf4; 
@@ -14,28 +14,19 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            color: #064e3b; /* Very deep green for readability */
+            color: #064e3b; 
         }
 
-        /* The main Card - Now a nice matching green instead of white */
+      
         .container {
-            background-color: #dcfce7; /* Light mint green */
+            background-color: #dcfce7; 
             padding: 40px;
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(20, 83, 45, 0.1);
             width: 100%;
             max-width: 450px;
             text-align: center;
-            border: 1px solid #bbf7d0; /* Subtle border to define the shape */
-        }
-
-        .greeting {
-            font-size: 1.1rem;
-            color: #16a34a; 
-            margin: 0;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: 1px solid #bbf7d0; 
         }
 
         h1 {
@@ -50,14 +41,14 @@
             margin-bottom: 30px;
         }
 
-        /* Stacked Form */
+        
         #studyForm {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
-        /* Input fields with a slightly lighter green background */
+        
         input, select {
             width: 100%;
             padding: 12px 15px;
@@ -80,7 +71,7 @@
             color: #4ade80;
         }
 
-        /* The Generate Button */
+        
         .btn {
             background-color: #16a34a;
             color: white;
@@ -103,7 +94,7 @@
             margin: 25px 0;
         }
 
-        /* Result Area with a darker green background for contrast */
+        
         #result {
             margin-top: 20px;
             text-align: left;
@@ -123,12 +114,12 @@
 <body>
 
     <div class="container">
-        <p class="greeting">Hola!</p>
-        <h1>StudyFlash⚡</h1>
-        <p class="subtitle">Learn anything in a flash</p>
+       
+        <h1>Hey, Welcome to StudyFlash⚡</h1>
+        <p class="subtitle">-learn anything in a flash!</p>
 
         <form id="studyForm">
-            <input type="text" id="topic" placeholder="What are we studying?" required>
+            <input type="text" id="topic" placeholder="What are we studying today?" required>
             
             <select id="format" required>
                 <option value="" disabled selected>Choose Format</option>
@@ -195,4 +186,5 @@
         });
     </script>
 </body>
+
 </html>
